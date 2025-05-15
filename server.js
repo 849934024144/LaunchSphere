@@ -240,15 +240,15 @@ wss.on('connection', (ws, req) => {
    // Extract user ID and name from query parameters
   ws.on('message', async (message) => {
     
-    const { senderId,senderName ,content } = JSON.parse(message);
+    const { id,name ,photo,content } = JSON.parse(message);
   
-    console.log('📨 Message from', senderId, ':', content);
+    console.log('📨 Message from', id,name ,photo, ':', content);
   
     // Save to MongoDB
     await Message.create({
-      sender: {name:senderId.name,
-        id: senderId.id,
-        photo: senderId.photo, // optional: user's photo URL
+      sender: {name:name,
+        id: id,
+        photo: photo, // optional: user's photo URL
       },
       content: content,
     });
@@ -258,11 +258,11 @@ wss.on('connection', (ws, req) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify({
           sender: {
-            id: senderId,
-            name: senderName,
-            photo: senderPhoto,
+            id: id,
+            name: name,
+            photo: photo,
           },
-          content: msg,
+          content: content,
           timestamp: new Date(),
         }));
       }

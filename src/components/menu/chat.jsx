@@ -46,24 +46,13 @@ const Chat = () => {
     };
   }, []);
 
-  // const sendMessage = () => {
-  //   // Check if socket is open and input is not empty
-  //   if (input.trim() && socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-  //     socketRef.current.send(input); // Send the message through WebSocket
-  //     setInput(''); // Clear the input field
-  //   } else {
-  //     console.warn('Socket not ready or empty input');
-  //   }
-  // };
   const sendMessage = () => {
     if (input.trim() && socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      const messageData = {
-        senderId: {
-          id: userId, // Replace with the actual sender's ID (e.g. from auth or props)
+      const messageData = {       
+          id: userId, 
           name:user.name,
-          photo:user.photo
-        },  // Replace with the actual sender's ID (e.g. from auth or props)
-        content: input,
+          photo:user.photo,     
+          content: input,
       };
   
       socketRef.current.send(JSON.stringify(messageData));  // Send as JSON
